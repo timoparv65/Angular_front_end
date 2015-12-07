@@ -8,9 +8,7 @@
 // lisäämällä loginFactory luodaan yhteys controllerin ja Factoryn välille
 // $location:lla voidaan tehdä näkymänvaihdot (yleensäkkin käskyttää)
 main_module.controller('controllerLogin',function($scope, loginFactory,$location){
-    
-    //var user = $scope.user;
-    //$scope.pass = "halituli"; // luodaan controllerissa muuttuja, liitetään scope-objektiin
+
     
     // This is called when login is pressed in partial_login.html
     $scope.loginClicked = function(){
@@ -24,18 +22,33 @@ main_module.controller('controllerLogin',function($scope, loginFactory,$location
         var waitPromise = loginFactory.startLogin(temp);
         // Wait the response from server
         waitPromise.then(function(data){
-            console.log("success");
+            console.log("success1");
             //$location.path('/list'); // menee list-kontekstiin
             // code inside this block will be called when success response
             // from server recives
         },function error(data){
-            console.log("virhe");
+            console.log("virhe1");
             $('.error').text('Wrong username or password!'); // 'error' määritetty partial_login.html:ssä. $ = jQuery
         });
     }
     
+    
     $scope.registerClicked = function(){
         console.log('register was pressed');
+        
+        var temp = {
+            username:$scope.user, // nimet mätsättävä user.js:ssä olevien muuttujien kanssa
+            password:$scope.pass
+        };
+        
+        var waitPromise = loginFactory.startRegister(temp);
+        
+        waitPromise.then(function(data){
+            console.log("success2");
+        }),function error(data){
+            console.log("virhe2");
+            $('.error').text(data.toString);
+        };
     }
     
 });

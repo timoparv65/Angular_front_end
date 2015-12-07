@@ -22,6 +22,17 @@ main_module.factory('loginFactory',function($resource){
     };
     
     
+    factory.startRegister = function(data){
+      
+        console.log(data);
+        
+        // create a resource for context '/friends/register'
+        var req = $resource('/friends/register',{},{'post':{method:'POST'}});
+        
+        return req.post(data).$promise;
+    };
+    
+    
     //Factory must always return an object!!!!
     return factory;
     
