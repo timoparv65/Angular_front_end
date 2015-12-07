@@ -10,6 +10,7 @@ var app = express();
 //=====================Middlewares========================
 //Bodyparser json() middleware parses the json object
 //from HTTP POST request
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(function(req,res,next){
     
@@ -25,12 +26,13 @@ app.use(function(req,res,next){
 
 // Define middlewares for our static files (.html, .css, .js files that are loaded
 // by browser when parsing index.html file)
-app.use('/',express.static(path.join(__dirname, '../FrontEnd/views'))); // hakee index.html:än
+app.use('/',express.static(path.join(__dirname, '../FrontEnd/views'))); // hakee oletusarvoisesti index.html:än
 app.use('/FrontEnd/css',express.static(path.join(__dirname, '../FrontEnd/css')));
 app.use('/FrontEnd/lib',express.static(path.join(__dirname, '../FrontEnd/lib')));
 app.use('/FrontEnd/module',express.static(path.join(__dirname, '../FrontEnd/module')));
 app.use('/FrontEnd/controllers',express.static(path.join(__dirname, '../FrontEnd/controllers')));
 app.use('/FrontEnd/factories',express.static(path.join(__dirname, '../FrontEnd/factories')));
+
 //app.use('/css',express.static(path.join(__dirname, 'css')));
 //app.use('/controllers',express.static(path.join(__dirname, 'controllers')));
 //app.use('/lib',express.static(path.join(__dirname, 'lib')));

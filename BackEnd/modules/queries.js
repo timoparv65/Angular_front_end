@@ -132,25 +132,28 @@ exports.registerFriend = function(req,res){
 }
 
 exports.loginFriend = function(req,res){
-    
+    console.log("menee exports.loginFriend");
     var searchObject = {
         username:req.body.username,
         password:req.body.password
     }
     
+    console.log(searchObject);
+    console.log(req.body);
+    
     db.Friends.find(searchObject,function(err,data){
         
         if(err){
             
-            res.send({status:err.message});
+            res.send(502,{status:err.message}); // 502 = HTTP status koodi. 502 = serverissä sisäinen virhe
             
         }else{
             //=< 0 means wrong username or password
             if(data.length > 0){
-                res.send({status:"Ok"});
+                res.send(200,{status:"Ok"});
             }
             else{
-                res.send({status:"Wrong username or password"});
+                res.send(401,{status:"Wrong username or password"});
             }
             
         }
