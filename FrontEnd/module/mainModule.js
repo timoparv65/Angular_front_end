@@ -10,11 +10,13 @@ main_module.config(function($routeProvider){
     
     // '/' = konteksti
     $routeProvider.when('/',{
-       
-        templateUrl:'partial_login.html', // renderöi ng-view direktiivin omaavaan elementtiin. Angular tekee sisäisesti GET-pyynnön serverille saadakseen 
+        // renderöi ng-view direktiivin omaavaan elementtiin. Angular tekee sisäisesti GET-pyynnön serverille saadakseen 
+        templateUrl:'partial_login.html',
         controller:'controllerLogin'
-    }).when('/list',{// listaa kaikki ystävät
-         templateUrl:'partial_dataView.html'
+    }).when('/list',{// listaa kaikki ystävät. Kirjoita selaimeen localhost:3000/#/list
+        
+        templateUrl:'partial_dataView.html',
+        controller:'friendDataController'
     });
 
 });

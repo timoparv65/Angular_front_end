@@ -11,7 +11,7 @@ var express = require("express");
 var router = express.Router();
 
 
-router.get('/:username',function(req,res){
+router.get('/',function(req,res){
     
     query.getFriendsByUsername(req,res);
 });
@@ -19,7 +19,7 @@ router.get('/:username',function(req,res){
 //This router handles a request to uri
 //localhost:3000/friends/login
 router.post('/login',function(req,res){
-    console.log("user.js: post(/login...");
+
     query.loginFriend(req,res);
 });
 

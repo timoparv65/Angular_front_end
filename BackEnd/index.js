@@ -6,18 +6,32 @@ var queries = require('./modules/queries');
 var person = require('./modules/person'); 
 var user = require('./modules/user');
 
+// This is used for creating a secret key value
+var uuid = require('uuid'); // salausavainta varten
+// This is used to create a session object for client
+var session = require('express-session');
+
 var app = express();
 //=====================Middlewares========================
+
+// luo session ja cookien
+app.use(session({
+    secret:uuid.v1(),
+    cookie:{maxAge:600000} // kuinka kauan cookie on valid => 600'000 ms
+}));
+
 //Bodyparser json() middleware parses the json object
 //from HTTP POST request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+
 app.use(function(req,res,next){
     
     console.log(req.method);
     console.log(req.path);
     console.log(__dirname);
     console.log(req.body);
+    console.log(req.session);
     //console.log(database.Person);
     //database.myFunction();
     //Send request forward in stack
@@ -39,5 +53,13 @@ app.use('/persons',person);
 app.use('/friends',user);
 
 //=====================ROUTERS============================
+
+// tuhoaa session kun logataan ulos
+app.get('/logout', function(req,res){
+    req.session.destroy();
+    //voi tuhota pelkästään käyttäjän
+    //req.session.kayttaja = null;
+    res.redirect('/');
+});
 
 app.listen(3000);

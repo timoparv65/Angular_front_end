@@ -22,12 +22,10 @@ main_module.controller('controllerLogin',function($scope, loginFactory,$location
         var waitPromise = loginFactory.startLogin(temp);
         // Wait the response from server
         waitPromise.then(function(data){
-            console.log("success1");
-            //$location.path('/list'); // menee list-kontekstiin
+            $location.path('/list'); // menee list-kontekstiin MainModule.js:ssä
             // code inside this block will be called when success response
             // from server recives
         },function error(data){
-            console.log("virhe1");
             $('.error').text('Wrong username or password!'); // 'error' määritetty partial_login.html:ssä. $ = jQuery
         });
     }
@@ -42,13 +40,16 @@ main_module.controller('controllerLogin',function($scope, loginFactory,$location
         };
         
         var waitPromise = loginFactory.startRegister(temp);
+        waitPromise.then(success, error);
         
-        waitPromise.then(function(data){
-            console.log("success2");
-        }),function error(data){
-            console.log("virhe2");
-            $('.error').text(data.toString);
-        };
     }
     
 });
+
+function success(data){
+    alert('New person registered. You can login with your creadintentials');
+}
+
+function error(data){
+    alert('Registering person failed. Username already in use');
+}

@@ -122,34 +122,35 @@ exports.registerFriend = function(req,res){
     friend.save(function(err){
         
         if(err){
-            
-            res.send({status:err.message});
+             // 500 = error. Angularin $resource:n $promise-objekti vaatii statuksen
+            res.status(500).send({status:err.message});
         }
         else{
-            res.send({status:"Ok"});
+            res.status(200).send({status:"Ok"}); // 200 = ok
         }
     });
 }
 
 exports.loginFriend = function(req,res){
-    console.log("menee exports.loginFriend");
+    
     var searchObject = {
         username:req.body.username,
         password:req.body.password
     }
-    
-    console.log(searchObject);
-    console.log(req.body);
-    
-    db.Friends.find(searchObject,function(err,data){
+
+    // findOne palauttaa vain yhden objektin
+    db.Friends.findOne(searchObject,function(err,data){
         
         if(err){
             
             res.send(502,{status:err.message}); // 502 = HTTP status koodi. 502 = serverissä sisäinen virhe
             
         }else{
+            console.log(data);
             //=< 0 means wrong username or password
-            if(data.length > 0){
+            //if(data.length > 0){
+            if(data){
+                req.session.kayttaja = data.username; // talletetaan sessioon käyttäjänimi
                 res.send(200,{status:"Ok"});
             }
             else{
@@ -162,13 +163,16 @@ exports.loginFriend = function(req,res){
 
 exports.getFriendsByUsername = function(req,res){
     
-    var usern = req.params.username.split("=")[1];
-    db.Friends.find({username:usern}).
+    //var usern = req.params.username.split("=")[1]; // vanhaa tietoa, ei käytetä cookien kanssa
+    //db.Friends.find({username:usern}). // vanhaa tietoa, ei käytetä cookien kanssa
+    db.Friends.findOne({username:req.session.kayttaja}). // luetaan tieto sessiosta (serveripäästä)
         populate('friends').exec(function(err,data){
             
-            console.log(err);
-            console.log(data[0].friends);
-            res.send(data[0].friends);
+            if(data){
+                res.send(data.friends);    
+            } else {
+                res.redirect('/');
+            }
         
         });
 }

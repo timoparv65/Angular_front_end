@@ -1,5 +1,21 @@
+<!-- logout kontekstiin, ja index.js:ssä tuhoaa session -->
+<a href="/logout">Logout</a>
+
 <h1>Here is the table data of your friends</h1>
-<table class="table">
-    <thead></thead>
-    <tbody></tbody>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- nr-repeat tekee toistorakenteen, person on itse keksitty, friendData tulee friendDataController.js:stä -->
+        <tr ng-repeat='person in friendData'>
+            <td>{{person.name}}</td>
+            <td>{{person.address}}</td>
+            <td>{{person.age}}</td>
+        </tr>
+    </tbody>
 </table>

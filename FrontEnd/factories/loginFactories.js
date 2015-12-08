@@ -5,15 +5,14 @@
 // Factorille annetty nomi loginFactory
 main_module.factory('loginFactory',function($resource){
     
-    var factory = {};
+    var factory = {}; // luo objekti
     
     // This function can be called from ANY controller using this factory
     // implementation
     factory.startLogin = function(data){
         
-        console.log(data);
-        // create a resource for context '/friends/login'
-        var req = $resource('/friends/login',{},{'post':{method:'POST'}}); // menee kontekstiin /friends/login BackEnd:ssa
+        // create a resource for context '/friends/login' in BackEnd
+        var req = $resource('/friends/login',{},{'post':{method:'POST'}});
         // Use POST method to send the username and password to above context
         // Note that we return an promise object from here
         // => asynkrooninen lähetys. $promise sisältää tiedon onnistuiko vai epäonnistuiko operaatio BackEndissä
@@ -23,9 +22,7 @@ main_module.factory('loginFactory',function($resource){
     
     
     factory.startRegister = function(data){
-      
-        console.log(data);
-        
+  
         // create a resource for context '/friends/register'
         var req = $resource('/friends/register',{},{'post':{method:'POST'}});
         
