@@ -1,3 +1,4 @@
+
 <!-- logout kontekstiin, ja index.js:ssä tuhoaa session -->
 <a href="/logout">Logout</a>
 
@@ -11,7 +12,6 @@
         </tr>
     </thead>
     <tbody>
-        <!-- nr-repeat tekee toistorakenteen, person on itse keksitty, friendData tulee friendDataController.js:stä -->
         <tr ng-repeat='person in friendData'>
             <td>{{person.name}}</td>
             <td>{{person.address}}</td>
