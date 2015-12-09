@@ -1,11 +1,13 @@
-main_module.controller('addController',function($scope,Flash,friendDataFactory){
+﻿main_module.controller('addController',function($scope,Flash,friendDataFactory){
     console.log('addController loaded');
     
+    //Funktiototeutus Save-nappulan painallukselle partial_addView.html ikkunassa
     $scope.savePersonClicked = function(){
         console.log("Save was pressed");
         // estetään Save-napin painaminen sillä välin kun tiedot tallennetaan tietokantaan
         $('#savePerson').attr("disabled", true);
         
+        // temp muuttujien nimet oltava samat kuin Person määrittelyssä database.js:ssä
         var temp = {
             name:$scope.name,
             address:$scope.address,
@@ -13,6 +15,7 @@ main_module.controller('addController',function($scope,Flash,friendDataFactory){
         };
         
         var waitPromise = friendDataFactory.insertData(temp);
+
         waitPromise.then(function(response){
             // queries.js/exports.saveNewPerson: palauttaa data nimisen muuttujan responsessa.
             // Talletetaan se friendsArray:hyn

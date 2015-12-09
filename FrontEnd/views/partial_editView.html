@@ -1,3 +1,7 @@
-<div>
-    <p>Tämä on partial_editView.html</p>
-</div>
+<form class="loginForm">
+    <h3>Edit and save information</h3>
+    <input class="form-control" type="text" placeholder="name" ng-model="name">
+    <input class="form-control" type="text" placeholder="address" ng-model="address">
+    <input class="form-control" type="text" placeholder="age" ng-model="age">
+    <input id="savePerson" class="btn btn-default" type="button" value="Save" ng-click="savePersonClicked()">
+</form>

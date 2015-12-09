@@ -37,8 +37,10 @@ exports.saveNewPerson = function(req,res){
             //Make a redirect to root context
             //res.redirect(301,'/persons.html');
             if(err){
+                //500 = Internal Server Error
                 res.status(500).json({message:'Fail'});
             }else{
+                //200 = ok
                 res.status(200).json({data:newData});
             }
         });

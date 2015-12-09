@@ -13,6 +13,7 @@ main_module.factory('friendDataFactory',function($resource){
 
     };
     
+    
     factory.insertData = function(data){
         
         // luo resurssi objektin

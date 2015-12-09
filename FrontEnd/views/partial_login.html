@@ -1,12 +1,11 @@
-<div class="login_container">
-    <p class="error"></p>
-    <form class="loginForm">
-        <h3>Login or Register to Frinds App!</h3>
-        <input type="text" placeholder="username" class="form-control" ng-model="user"><br/>
-        <input type="password" placeholder="password" class="form-control" ng-model='pass'><br/>
-        <input type="button" value="Login" class="btn btn-default" ng-click='loginClicked()'>
-        <input type="button" value="Register" class="btn btn-default" ng-click='registerClicked()'>
-        <!-- bind the data from username testfield (use variable 'user') -->
-        <p>{{user}}</p> <!-- {{}} = interpolate direktiivi  -->
-    </form>
-</div>
+<p class="error"></p>
+<form class="loginForm">
+    <h3>Login or Register to Frinds App!</h3>
+    <input type="text" placeholder="username" class="form-control" ng-model="user"><br/>
+    <input type="password" placeholder="password" class="form-control" ng-model='pass'><br/>
+    <input type="button" value="Login" class="btn btn-default" ng-click='loginClicked()'>
+    <input type="button" value="Register" class="btn btn-default" ng-click='registerClicked()'>
+    <!-- bind the data from username testfield (use variable 'user') -->
+    <p>{{user}}</p> <!-- {{}} = interpolate direktiivi  -->
+</form>
+
