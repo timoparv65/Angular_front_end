@@ -8,7 +8,7 @@ main_module.controller('friendDataController',function($scope,friendDataFactory)
 
         var waitPromise = friendDataFactory.getFriedData();
     
-            waitPromise.then(function(data){
+        waitPromise.then(function(data){
 
             friendDataFactory.friendsArray = data;
             $scope.friendData = data;
@@ -17,6 +17,10 @@ main_module.controller('friendDataController',function($scope,friendDataFactory)
     }else{
         
         $scope.friendData = friendDataFactory.friendsArray;
+    }
+    
+    $scope.rowClicked = function(id){
+        console.log('clikattu riviä, jonka id=' + id);
     }
     
     

@@ -7,7 +7,7 @@
 
 // lisäämällä loginFactory luodaan yhteys controllerin ja Factoryn välille
 // $location:lla voidaan tehdä näkymänvaihdot (yleensäkkin käskyttää)
-main_module.controller('controllerLogin',function($scope, loginFactory,$location){
+main_module.controller('controllerLogin',function($scope,loginFactory,$location){
 
     
     // This is called when login is pressed in partial_login.html

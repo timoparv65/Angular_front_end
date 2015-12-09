@@ -13,5 +13,13 @@ main_module.factory('friendDataFactory',function($resource){
 
     };
     
+    factory.insertData = function(data){
+        
+        // luo resurssi objektin
+        var resource = $resource('/persons',{},{'post':{method:'POST'}});
+        // lähetä data POSTilla ja palauta $promise:n
+        return resource.post(data).$promise;
+    };
+    
     return factory;
 });

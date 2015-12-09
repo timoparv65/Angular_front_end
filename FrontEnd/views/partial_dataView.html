@@ -1,21 +1,28 @@
 
-<!-- logout kontekstiin, ja index.js:ssä tuhoaa session -->
-<a href="/logout">Logout</a>
+<!-- logout kontekstiin (BackEnd routeriin), ja index.js:ssä tuhoaa session -->
+<a href="/logout">Logout</a> 
+<a href="#/delete">Delete Information</a> <!-- # menee FrontEnd routeriin -->
+<a href="#/insert">Insert New Friend</a>
 
-<h1>Here is the table data of your friends</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Age</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat='person in friendData'>
-            <td>{{person.name}}</td>
-            <td>{{person.address}}</td>
-            <td>{{person.age}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table_container">
+    <h1>Here is the table data of your friends</h1>
+    <p>To edit information, click the row</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- lisää joka riville oman rowClicked-funktion -->
+            <tr ng-repeat='person in friendData' ng-click='rowClicked(person._id)'>
+                <td>{{person.name}}</td>
+                <td>{{person.address}}</td>
+                <td>{{person.age}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
