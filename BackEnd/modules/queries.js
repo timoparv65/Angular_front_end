@@ -87,7 +87,14 @@ exports.updatePerson = function(req,res){
     }
     
     db.Person.update({_id:req.body.id},updateData,function(err){
-        res.send({data:"ok"});
+        
+        if(err){
+            //500 = Internal Server Error
+            res.status(500).json({message:err.message});
+        }else{
+            //200 = ok
+            res.status(200).json({message:"Data updated"});
+        }
     });
 }
 
@@ -169,8 +176,6 @@ exports.loginFriend = function(req,res){
 
 exports.getFriendsByUsername = function(req,res){
     
-    //var usern = req.params.username.split("=")[1]; // vanhaa tietoa, ei käytetä cookien kanssa
-    //db.Friends.find({username:usern}). // vanhaa tietoa, ei käytetä cookien kanssa
     db.Friends.findOne({username:req.session.kayttaja}). // luetaan tieto sessiosta (serveripäästä)
         populate('friends').exec(function(err,data){
             
