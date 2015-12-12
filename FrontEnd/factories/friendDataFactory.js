@@ -25,10 +25,12 @@ main_module.factory('friendDataFactory',function($resource){
             var waitPromise = resource.query().$promise;
             waitPromise.then(function(data){
                 
+                // kopioi tiedot cacheen
                 factory.friendsArray = data;
                 callBackFunction(factory.friendsArray);
             },function(error){
                 
+                // tyhjennä cache
                 factory.friendsArray = [];
                 callBackFunction(factory.friendsArray);
             });
@@ -38,7 +40,7 @@ main_module.factory('friendDataFactory',function($resource){
             callBackFunction(factory.friendsArray);
         }
 
-    };
+    }
     
     
     factory.insertData = function(data){
@@ -47,7 +49,7 @@ main_module.factory('friendDataFactory',function($resource){
         var resource = $resource('/persons',{},{'post':{method:'POST'}});
         // lähetä data POSTilla ja palauta $promise:n
         return resource.post(data).$promise;
-    };
+    }
     
     
     /**
@@ -63,7 +65,7 @@ main_module.factory('friendDataFactory',function($resource){
                 return factory.friendsArray[i];
             }
         }
-    };
+    }
     
     //updates data to the backend
     factory.updateData = function(data){
@@ -72,7 +74,7 @@ main_module.factory('friendDataFactory',function($resource){
         var resource = $resource('/persons',{},{'put':{method:'PUT'}});
         // lähetä data PUT:illa ja palauta $promise
         return resource.put(data).$promise;
-    };
+    }
     
     // delete data from the backend
     factory.deleteData = function(data){
@@ -84,7 +86,16 @@ main_module.factory('friendDataFactory',function($resource){
         var resource = $resource('/persons',{},{'delete':{method:'DELETE'}});
         //lähetä data DELETE:llä ja palauta $promise
         return resource.delete(data).$promise;
-    };
+    }
+    
+    //search data from cache ? or backend
+    factory.search = function(term){ // term = etsittävä termi
+        
+        // luo resurssi objekti
+        var resource = $resource('/persons/search/',{name:term},{'get':{method:'GET'}});
+        //lähetä data QUERY:llä ja palauta $promise (QUERY = kysely)
+        return resource.query().$promise;
+    }
     
     return factory;
 });

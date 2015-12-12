@@ -1,23 +1,5 @@
 var db = require('./database');
 
-/**
- *This function gets all documents from person collection
- */
-exports.getAllPersons = function(req,res){
-    
-    db.Person.find(function(err,data){
-        
-        if(err){
-            
-            console.log(err.message);
-            res.send("Error in database");
-        }
-        else{
-            
-            res.send(data);
-        }
-    });
-}
 
 /**
   *This function saves new person information to our person
@@ -117,29 +99,19 @@ exports.updatePerson = function(req,res){
   */
 exports.findPersonsByName = function(req,res){
     
-    var name = req.params.nimi.split("=")[1];
-    var username = req.params.username.split("=")[1];
-    console.log(name);
-    console.log(username);
-    db.Friends.find({username:username}).
+    var name = req.query.name;
+    db.Friends.findOne({username:req.session.kayttaja}).
         populate({path:'friends',match:{name:{'$regex':'^' + name,'$options':'i'}}}).
             exec(function(err,data){
-        console.log(err);
-        console.log(data);
-        res.send(data[0].friends);
+        
+        if(data){
+            res.send(data.friends);
+        }else{
+            res.redirect('/');
+        }
+        
     });
     
-    /*
-    db.Person.find({name:{'$regex':'^' + name,'$options':'i'}},function(err,data){
-        
-        if(err){
-            res.send('error');
-        }
-        else{
-            console.log(data);
-            res.send(data);
-        }
-    });*/
 }
 
 exports.registerFriend = function(req,res){

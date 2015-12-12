@@ -29,4 +29,22 @@ main_module.controller('friendDataController',function($scope,friendDataFactory,
         $scope.friendData = dataArray;
     }
     
+    // Search toiminnallisuus
+    $scope.search = function(){
+        
+        console.log('search pressed');
+        
+        var waitPromise = friendDataFactory.search($scope.search_term);
+        
+        waitPromise.then(success,error)
+    }
+    
+    function success(response){
+        $scope.friendData = response;
+    }
+    
+    function error(response){
+        
+    }
+    
 });

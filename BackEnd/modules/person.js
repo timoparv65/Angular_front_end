@@ -9,8 +9,8 @@ router.get('/',function(req,res){
     db.getAllPersons(req,res);
 });
 
-
-router.get('/:nimi/:username',function(req,res){
+// Handle GET requests for /persons/search context
+router.get('/search',function(req,res){
     
     db.findPersonsByName(req,res);
 });
@@ -21,11 +21,13 @@ router.post('/',function(req,res){
     db.saveNewPerson(req,res);
 });
 
+//Handle PUT requets for /persons context
 router.put('/',function(req,res){
     
     db.updatePerson(req,res);
 });
 
+//Handle DELETE requets for /persons context
 router.delete('/',function(req,res){
     
     db.deletePerson(req,res);
