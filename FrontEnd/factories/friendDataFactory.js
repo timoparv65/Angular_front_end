@@ -15,9 +15,6 @@ main_module.factory('friendDataFactory',function($resource){
     // => frienData:n päivittyminen triggaa näytön päivityksen ??
     factory.getFriendData = function(callBackFunction){
         
-        //var resource = $resource('/friends',{},{'get':{method:'GET'}});
-        //return resource.query().$promise;
-        
         //Jos friendsArray on tyhjä haetaan data BackEndistä
         if(factory.friendsArray.length === 0){
             
@@ -73,11 +70,21 @@ main_module.factory('friendDataFactory',function($resource){
         
         // luo resurssi objekti
         var resource = $resource('/persons',{},{'put':{method:'PUT'}});
-        // lähetä data PUTilla ja palauta $promise
+        // lähetä data PUT:illa ja palauta $promise
         return resource.put(data).$promise;
     };
     
-
+    // delete data from the backend
+    factory.deleteData = function(data){
+        
+        // Markus: tämä ei ole välttämätön tässä. Käytetään myöhemmin
+        //$http.defaults.headers.common['content-type'] = 'application/json';
+        
+        // luo resurssi objekti
+        var resource = $resource('/persons',{},{'delete':{method:'DELETE'}});
+        //lähetä data DELETE:llä ja palauta $promise
+        return resource.delete(data).$promise;
+    };
     
     return factory;
 });

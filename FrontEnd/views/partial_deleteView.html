@@ -16,6 +16,8 @@
                 <td>{{person.address}}</td>
                 <td>{{person.age}}</td>
                 <td><input type="checkbox" ng-click='addToDelete($event,$index,person._id)'></td>
+<!-- $index (liittyy ng-repeat:iin, angularjs): iterator offset of the repeated element (0..length-1) -->
+<!-- $event: ng-click:in event objekti -->
             </tr>
         </tbody>
     </table>

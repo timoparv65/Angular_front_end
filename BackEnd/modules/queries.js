@@ -48,28 +48,41 @@ exports.saveNewPerson = function(req,res){
     });
 }
 
-//This function deletes one person from our collection
+//This function deletes a group of persons from our collection
 exports.deletePerson = function(req,res){
     
-    //what happens here is that req.params.id
-    //return string "id=34844646bbsksjdks"
-    //split function splits the string form "="
-    //and creates an array where [0] contains "id"
-    //and [1] contains "34844646bbsksjdks"
-    console.log(req.params);
-    var id = req.params.id.split("=")[1];
-    var userName = req.params.username.split("=")[1];
-    db.Person.remove({_id:id},function(err){
+    // tuhottavat Person objektit
+    var toDelete = [];
+    
+    //Jos req.query.forDelete on jo Array, voit kopioida Array -> Array
+    if(req.query.forDelete instanceof Array)
+        
+        toDelete = req.query.forDelete;
+    else{ // muuten työnnä elementit Arrayhyn
+        
+       toDelete.push(req.query.forDelete); 
+    }
+    
+    console.log(toDelete);
+    
+    // $in Matches any of the values specified in an array. 
+    db.Person.remove({_id:{$in:toDelete}},function(err){
         
         if(err){
             res.send(err.message);
         }
         else{
-            //If succesfully removed remome also reference from
-            //User collection
-            db.Friends.update({username:userName},{$pull:{'friends':id}},function(err,data){
-                console.log(err);
-                res.send("Delete ok");    
+            //If succesfully removed remome also reference from User collection.
+            // $pull = Removes all array elements that match a specified query. 
+            db.Friends.update({username:req.session.kayttaja},{$pull:{'friends':{$in:toDelete}}},function(err,data){
+                if(err){
+                    //console.log(err);
+                    //500 = Internal Server Error
+                    res.status(500).send({messsage:err.message});
+                }else{
+                    //200 = ok
+                    res.status(200).send({message:'Delete success'});
+                }
             });
             
         }
