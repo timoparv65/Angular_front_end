@@ -148,7 +148,7 @@ exports.loginFriend = function(req,res){
             //=< 0 means wrong username or password
             //if(data.length > 0){
             if(data){
-                req.session.kayttaja = data.username; // talletetaan sessioon käyttäjänimi
+                req.session.kayttaja = data.username; // talletetaan sessioon käyttäjänimi.
                 res.send(200,{status:"Ok"});
             }
             else{
