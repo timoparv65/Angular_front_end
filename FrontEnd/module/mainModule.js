@@ -8,10 +8,14 @@ var main_module = angular.module('main_module',['ngRoute','ngResource','flash'])
 //in the router below in resolved attribute
 // =>$q = yleisin promise implementaatio (q-interface)
 // => $promise = tehdään pyynnöt Back Endiin
-function loginRequired($q,$resource,$location){
+function loginRequired($q,$resource,$location,$http){ // $http lisätty 5.1.2016
     
     //Create a promise object. Can be in two states: suceed or not
     var deferred = $q.defer();
+    
+    // lisätty 5.1.2016
+    // Set your own headers in request like this. Tänne token
+    $http.defaults.headers.common['x-access-token'] = sessionStorage['token'];
     
     // promise joko onnistuu tai epäonnistuu
     //$promise tsekkaa mikä oli statuskoodi vastauksessa

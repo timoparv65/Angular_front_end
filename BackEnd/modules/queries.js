@@ -1,5 +1,7 @@
 var db = require('./database');
-
+// lisätty 5.1.2016
+var jwt = require('jsonwebtoken');
+var server = require('../index');
 
 /**
   *This function saves new person information to our person
@@ -149,7 +151,10 @@ exports.loginFriend = function(req,res){
             //if(data.length > 0){
             if(data){
                 req.session.kayttaja = data.username; // talletetaan sessioon käyttäjänimi.
-                res.send(200,{status:"Ok"});
+                // lisätty 5.1.2016
+                // Create the token
+                var token = jwt.sign(data,server.secret,{expiresIn:'2h'});
+                res.send(200,{status:"Ok",secret:token}); // token palautettava responsessa
             }
             else{
                 res.send(401,{status:"Wrong username or password"});

@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var https = require('https'); // lisätty 5.1.2016
 var fs = require('fs'); // fs = file system. Lisätty 5.1.2016
+var jwt = require('jsonwebtoken'); // lisätty 5.1.2016
 var bodyParser = require("body-parser");
 var database = require('./modules/database');
 var queries = require('./modules/queries');
@@ -20,6 +21,12 @@ var options = {
 
 // This is used for creating a secret key value
 var uuid = require('uuid'); // salausavainta varten
+
+//Create a secret for our web token
+var secret = uuid.v1();
+
+exports.secret = secret; // exportataan, koska käytetään myös muualla. Esim queries.js
+
 // This is used to create a session object for client
 var session = require('express-session');
 
@@ -47,21 +54,13 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-app.use(function(req,res,next){
-    
-    console.log(req.method);
-    console.log(req.path);
-    console.log(__dirname);
-    console.log(req.body);
-    console.log(req.session);
-    //console.log(database.Person);
-    //database.myFunction();
-    //Send request forward in stack
-    next();
-});
+
+// 5.1.2016
+// Alla olevat siirretty ennen tokenin määritystä, koska ne on luotava ennen tokenin luontia
 
 // Define middlewares for our static files (.html, .css, .js files that are loaded
 // by browser when parsing index.html file)
+// nämä staattisia
 app.use('/',express.static(path.join(__dirname, '../FrontEnd/views'))); // hakee oletusarvoisesti index.html:än
 app.use('/FrontEnd/css',express.static(path.join(__dirname, '../FrontEnd/css')));
 app.use('/FrontEnd/lib',express.static(path.join(__dirname, '../FrontEnd/lib')));
@@ -69,11 +68,13 @@ app.use('/FrontEnd/module',express.static(path.join(__dirname, '../FrontEnd/modu
 app.use('/FrontEnd/controllers',express.static(path.join(__dirname, '../FrontEnd/controllers')));
 app.use('/FrontEnd/factories',express.static(path.join(__dirname, '../FrontEnd/factories')));
 
-
-//=====================OUR REST API MIDDLEWARES============================
-app.use('/persons',person);
+// lisätty 5.1.2016
+// Siirretty tänne koska täällä ei käytetä tokenia
 app.use('/friends',user);
 
+
+// lisätty 5.1.2016
+// Alla olevat siirretty ennen tokenin määritystä, koska ne on luotava ennen tokenin luontia
 //=====================ROUTERS============================
 
 // tuhoaa session kun logataan ulos
@@ -84,6 +85,47 @@ app.get('/logout', function(req,res){
     //req.session.kayttaja = null;
     res.redirect('/');
 });
+
+
+app.use(function(req,res,next){
+    
+    // lisätty 5.1.2016
+    // tavat miten token voi tulla
+    //Read the token from request
+    var token = req.body.token || req.body.token || req.headers['x-access-token'];
+    
+    //console.log(token);
+    
+    // Check if there was a token
+    if(token){
+        // verify that token is not 'quessed' by the client and it matches
+        // the one we created in login phase
+        jwt.verify(token,secret,function(err, decoded) {
+            // There was error verifying the token
+            if(err){
+                
+                return res.send(401);
+            } else{
+                
+                req.decoded = decoded;
+                console.log(req.decoded);
+                next();
+            }
+        })
+    } else {
+        
+        res.send(403);
+    }
+    
+});
+
+
+
+
+//=====================OUR REST API MIDDLEWARES============================
+app.use('/persons',person); // tämä jätetty tänne, koska tokenia käytetty täällä
+
+//=====================ROUTERS============================
 
 // 4.1.2016
 // this router checks if client is logged in or not

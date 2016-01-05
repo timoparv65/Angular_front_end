@@ -1,4 +1,4 @@
-main_module.factory('friendDataFactory',function($resource){
+main_module.factory('friendDataFactory',function($resource,$http){
    
     var factory = {};
     factory.selected_id = null;
@@ -17,6 +17,10 @@ main_module.factory('friendDataFactory',function($resource){
         
         //Jos friendsArray on tyhjä haetaan data BackEndistä
         if(factory.friendsArray.length === 0){
+            
+            // lisätty 5.1.2016
+            // Set your own headers in request like this. Tänne token
+            $http.defaults.headers.common['x-access-token'] = sessionStorage['token'];
             
             //luodaan resurssi
             var resource = $resource('/friends',{},{'get':{method:'GET'}});
@@ -45,6 +49,9 @@ main_module.factory('friendDataFactory',function($resource){
     
     factory.insertData = function(data){
         
+        // lisätty 5.1.2016
+        $http.defaults.headers.common['x-access-token'] = sessionStorage['token'];
+        
         // luo resurssi objektin
         var resource = $resource('/persons',{},{'post':{method:'POST'}});
         // lähetä data POSTilla ja palauta $promise:n
@@ -70,6 +77,9 @@ main_module.factory('friendDataFactory',function($resource){
     //updates data to the backend
     factory.updateData = function(data){
         
+        // lisätty 5.1.2016
+        $http.defaults.headers.common['x-access-token'] = sessionStorage['token'];
+        
         // luo resurssi objekti
         var resource = $resource('/persons',{},{'put':{method:'PUT'}});
         // lähetä data PUT:illa ja palauta $promise
@@ -78,6 +88,9 @@ main_module.factory('friendDataFactory',function($resource){
     
     // delete data from the backend
     factory.deleteData = function(data){
+        
+        // lisätty 5.1.2016
+        $http.defaults.headers.common['x-access-token'] = sessionStorage['token'];
         
         // Markus: tämä ei ole välttämätön tässä. Käytetään myöhemmin
         //$http.defaults.headers.common['content-type'] = 'application/json';
@@ -90,6 +103,9 @@ main_module.factory('friendDataFactory',function($resource){
     
     //search data from cache ? or backend
     factory.search = function(term){ // term = etsittävä termi
+        
+        // lisätty 5.1.2016
+        $http.defaults.headers.common['x-access-token'] = sessionStorage['token'];
         
         // luo resurssi objekti
         var resource = $resource('/persons/search/',{name:term},{'get':{method:'GET'}});
