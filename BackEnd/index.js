@@ -1,10 +1,22 @@
 var express = require("express");
 var path = require("path");
+var https = require('https'); // lisätty 5.1.2016
+var fs = require('fs'); // fs = file system. Lisätty 5.1.2016
 var bodyParser = require("body-parser");
 var database = require('./modules/database');
 var queries = require('./modules/queries');
 var person = require('./modules/person'); 
 var user = require('./modules/user');
+
+// lisätty 5.1.2016
+var options = {
+    
+    key:fs.readFileSync('server.key'),
+    cert:fs.readFileSync('server.crt'),
+    requestCert:false,
+    rejectUnauthorized:false
+}
+
 
 // This is used for creating a secret key value
 var uuid = require('uuid'); // salausavainta varten
@@ -12,12 +24,22 @@ var uuid = require('uuid'); // salausavainta varten
 var session = require('express-session');
 
 var app = express();
+
+// lisätty 5.1.2016
+//You need to define these two variables with these
+//two environment variables to get you app work in openshift
+// OPENSHIFT_NODEJS_PORT ja OPENSHIFT_NODEJS_IP jos ajetaan OpenShiftissä
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3000);
+app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+
 //=====================Middlewares========================
 
 // luo session ja cookien
 app.use(session({
     secret:uuid.v1(),
     cookie:{maxAge:600000} // kuinka kauan cookie on valid => 600'000 ms
+    // maxAge voi olla myös 'null', jolloin sessio lopetetaan kun selain suljetaan,
+    // muutoin sessio jää elämään
 }));
 
 //Bodyparser json() middleware parses the json object
@@ -56,6 +78,7 @@ app.use('/friends',user);
 
 // tuhoaa session kun logataan ulos
 app.get('/logout', function(req,res){
+    // destroy poistaa kaikki session muuttajaan liittyvät muuttujat
     req.session.destroy();
     //voi tuhota pelkästään käyttäjän
     //req.session.kayttaja = null;
@@ -77,4 +100,7 @@ app.get('/isLogged',function(req,res){
     }
 });
 
-app.listen(3000);
+// lisätty 5.1.2016
+https.createServer(options, app).listen(app.get('port') ,app.get('ip'), function () {
+    console.log("Express server started ");
+});

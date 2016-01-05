@@ -6,21 +6,23 @@ var main_module = angular.module('main_module',['ngRoute','ngResource','flash'])
 // 4.1.2016
 //This function will check if user is logged in or not. This function is used
 //in the router below in resolved attribute
-// =>$q = yleisin promise implementaatio
+// =>$q = yleisin promise implementaatio (q-interface)
 // => $promise = tehdään pyynnöt Back Endiin
 function loginRequired($q,$resource,$location){
     
-    //Create a promise
+    //Create a promise object. Can be in two states: suceed or not
     var deferred = $q.defer();
     
     // promise joko onnistuu tai epäonnistuu
     //$promise tsekkaa mikä oli statuskoodi vastauksessa
-    $resource('/isLogged').query().$promise.then(function success(){
+    $resource('/isLogged').query().$promise.then(
+    // Success function
+    function success(){
         
         // Mark the promise to be solved (or resolved)
         deferred.resolve();
-        return deferred;
-        
+        return deferred; // palauta promise objekti
+    // Fail function
     },function fail(){
         
         //Mark promise to be failed
@@ -58,14 +60,20 @@ main_module.config(function($routeProvider){
     }).when('/insert',{// lisää ystävä
         
         templateUrl:'partial_addView.html',
-        controller:'addController'
+        controller:'addController',
+        resolve:{loginReguired:loginRequired}
+        
     }).when('/delete',{//poistaa useita ystäviä kerrallaan
         
         templateUrl:'partial_deleteView.html',
-        controller:'deleteController'
+        controller:'deleteController',
+        resolve:{loginReguired:loginRequired}
+        
     }).when('/edit',{// editoi ystävän tietoja
         
         templateUrl:'partial_editView.html',
-        controller:'editController'
+        controller:'editController',
+        resolve:{loginReguired:loginRequired}
+        
     });
 });
