@@ -8,6 +8,7 @@ var database = require('./modules/database');
 var queries = require('./modules/queries');
 var person = require('./modules/person'); 
 var user = require('./modules/user');
+var mysql_module = require('./modules/mysql_module'); // lisätty 11.1.2016
 
 // lisätty 5.1.2016
 var options = {
