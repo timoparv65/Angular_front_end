@@ -4,6 +4,26 @@ var jwt = require('jsonwebtoken');
 var server = require('../index');
 
 /**
+ *This function gets all documents from person collection
+ */
+exports.getAllPersons = function(req,res){
+    
+    db.Person.find(function(err,data){
+        
+        if(err){
+            
+            console.log(err.message);
+            res.send("Error in database");
+        }
+        else{
+            
+            res.send(data);
+        }
+    });
+}
+
+
+/**
   *This function saves new person information to our person
   *collection
   */
@@ -163,6 +183,7 @@ exports.loginFriend = function(req,res){
         }
     });
 }
+
 
 exports.getFriendsByUsername = function(req,res){
     

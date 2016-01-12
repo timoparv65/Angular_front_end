@@ -47,6 +47,7 @@ exports.loginMysqlProc = function(req,res){
             var test = results[0]; // taulukon sisällä taulukko
             if(test.length > 0){
                 req.session.kayttaja =test[0].username;
+                req.session.user_id = test[0].user_id; // 12.1.2016 talletetaan käyttäjän ID
                 //Create a token
                 var token = jwt.sign(results,server.secret,{expiresIn:'2h'});
                 res.send(200,{status:'Ok',secret:token});
@@ -55,5 +56,80 @@ exports.loginMysqlProc = function(req,res){
             }
         }
        
+    });
+}
+
+// 12.1.2016
+exports.getFriendsForUserByUsername = function(req,res){
+    
+    connection.query('CALL getUserFriendsByName(?)',
+                     [req.session.kayttaja],
+                     function(error,results,fields){
+        
+        console.log(results);
+        
+        
+        if(results.length > 0){
+            
+            var data = results[0];
+            res.send(data);
+        } else {
+            res.redirect('/');
+        }
+        
+    });
+    
+}
+
+// 12.1.2016
+exports.registerMysqlProc = function(req,res){
+    
+    connection.query('CALL setRegisterInfo(?,?)',
+                     [req.body.username,req.body.password],
+                    function(error,results,fields){
+        
+        if(error){
+            
+            res.send(500,{status:error.message});
+        }else{
+            
+            res.send(200,{status:'Ok'});
+        }
+    });
+    
+}
+
+// 12.1.2016
+exports.addNewFriend = function(req,res){
+    
+    connection.query('CALL addNewFriend(?,?,?,?)',
+                    [req.body.name,req.body.address,req.body.age,req.session.user_id],
+                    function(error,results,fields){
+        
+        if(error){
+                //500 = Internal Server Error
+                res.status(500).json({message:'Fail'});
+        }else{
+                //200 = ok
+                res.status(200).json({data:results});
+        }
+        
+    });
+}
+
+// 12.1.2016
+exports.updateFriend = function(req,res){
+    
+    connection.query('CALL updateFriend(?,?,?,?)',
+                    [req.body.id,req.body.name,req.body.address,req.body.age],
+                    function(error,results,fields){
+        
+        if(error){
+            //500 = Internal Server Error
+            res.status(500).json({message:error.message});
+        }else{
+            //200 = ok
+            res.status(200).json({message:"Data updated"});
+        }
     });
 }
