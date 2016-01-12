@@ -44,8 +44,9 @@ exports.loginMysqlProc = function(req,res){
             res.send(502,{status:err.message});
         }else{
             
-            if(results.length > 0){
-                req.session.kayttaja = results.username;
+            var test = results[0]; // taulukon sisällä taulukko
+            if(test.length > 0){
+                req.session.kayttaja =test[0].username;
                 //Create a token
                 var token = jwt.sign(results,server.secret,{expiresIn:'2h'});
                 res.send(200,{status:'Ok',secret:token});
