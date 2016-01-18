@@ -68,6 +68,7 @@ app.use('/FrontEnd/lib',express.static(path.join(__dirname, '../FrontEnd/lib')))
 app.use('/FrontEnd/module',express.static(path.join(__dirname, '../FrontEnd/module')));
 app.use('/FrontEnd/controllers',express.static(path.join(__dirname, '../FrontEnd/controllers')));
 app.use('/FrontEnd/factories',express.static(path.join(__dirname, '../FrontEnd/factories')));
+app.use('/FrontEnd/directives',express.static(path.join(__dirname, '../FrontEnd/directives'))); // lisätty 18.1.2016
 
 // lisätty 5.1.2016
 // Siirretty tänne koska täällä ei käytetä tokenia

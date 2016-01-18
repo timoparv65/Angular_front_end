@@ -1,31 +1,55 @@
-
+<ng-include src="'navbar.html'"></ng-include> <!-- lisätty 18.1.2016 -->
 <!-- logout kontekstiin (BackEnd routeriin), ja index.js:ssä tuhoaa session -->
-<a href="/logout">Logout</a> 
-<a href="#/delete">Delete Information</a> <!-- # menee FrontEnd routeriin -->
-<a href="#/insert">Insert New Friend</a>
+<!-- <a href="/logout">Logout</a> -->
+<!-- <a href="#/delete">Delete Information</a> --> <!-- # menee FrontEnd routeriin -->
+<!-- <a href="#/insert">Insert New Friend</a> -->
+<!-- Yllä olevat linkit menee navbar:iin -->
+
+<!-- <of-example></of-example> --> <!-- kun directive.restrict ='E'. lisätty 18.1.2016 -->
+
+
+<!--<div of-example></div>--> <!-- kun directive.restrict ='A'. lisätty 18.1.2016 -->
+
+<!--<div class="of-example"></div> --> <!-- käytetään luokkamääreenä. directive.restrict ='C'; -->
+
+<!-- Use as class -->
+<div class="of-example"></div>
+<!-- Use as element -->
+<of-example></of-example>
+<!-- Use as attribute -->
+<div of-example></div>
 
 <div class="table_container">
-    <h1>Here is the table data of your friends</h1>
-    <p>To edit information, click the row</p>
-    <p>Search persons...empty search will fetch all your friends</p>
-    <input type="search" class="form-control" value="Search" ng-model='search_term'/><br/>
-    <button class="btn btn-default" value="Search" ng-click='search()'>Search</button>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Age</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- lisää joka riville oman rowClicked-funktion -->
-            <tr ng-repeat='person in friendData' ng-click='rowClicked(person._id)'>
-                <td>{{person.name}}</td>
-                <td>{{person.address}}</td>
-                <td>{{person.age}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container"> <!-- sääntö 1 (18.1.2016)  -->
+        <div class="row"> <!-- sääntö 2 (18.1.2016)  -->
+            <div class="col-sm-6"> <!-- sääntö 3 (18.1.2016) -->
+                <h1>Here is the table data of your friends</h1>
+                <p>To edit information, click the row</p>
+                <p>Search persons...empty search will fetch all your friends</p>
+                <input type="search" class="form-control" value="Search" ng-model='search_term'/><br/>
+                <button class="btn btn-default" value="Search" ng-click='search()'>Search</button>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Age</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- lisää joka riville oman rowClicked-funktion -->
+                        <tr ng-repeat='person in friendData' ng-click='rowClicked(person._id)'>
+                            <td>{{person.name}}</td>
+                            <td>{{person.address}}</td>
+                            <td>{{person.age}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- sääntö 3 (18.1.2016) -->
+            <div class="col-sm-6"> <!-- sääntö 3 (18.1.2016) -->
+                <div class="jumbotron"><h1>This is jumbotron</h1></div> <!-- Bootstrapin jumbotro (iso näyttö) -->
+            </div> <!-- sääntö 3 (18.1.2016) -->
+        </div> <!-- sääntö 2 (18.1.2016)  -->
+    </div> <!-- sääntö 1 (18.1.2016)  -->
 </div>
 

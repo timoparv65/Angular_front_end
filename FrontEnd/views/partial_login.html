@@ -1,11 +1,25 @@
-<p class="error"></p>
-<form class="loginForm">
-    <h3>Login or Register to Frinds App!</h3>
-    <input type="text" placeholder="username" class="form-control" ng-model="user"><br/>
-    <input type="password" placeholder="password" class="form-control" ng-model='pass'><br/>
-    <input type="button" value="Login" class="btn btn-default" ng-click='loginClicked()'>
-    <input type="button" value="Register" class="btn btn-default" ng-click='registerClicked()'>
-    <!-- bind the data from username testfield (use variable 'user') -->
-    <p>{{user}}</p> <!-- {{}} = interpolate direktiivi  -->
-</form>
+<!-- 18.1.2016 Gridlayoutin säännöt -->
+<!-- Rule 1: everything must go inside container class (18.1.2016) -->
+<div class="container">
+    <!-- Rule 2: every column must be inside a row (18.1.2016) -->
+    <div class="row">
+        <!-- Rule 3: colunms are defined in row (18.1.2016) -->
+        <!-- 4 saraketta = 12/3 (18.1.2016) -->
+        <div style="background-color:red;" class="col-sm-3 col-md-2">Column 1</div> <!-- sarakkeen leveys 3. sm = tablets (18.1.2016) -->
+        <div class="col-sm-3 col-md-4">Column 2</div> <!-- sarakkeiden summan oltava 12 (18.1.2016) -->
+        <div class="col-sm-3 col-md-4">Column 3</div>
+        <div style="background-color:green;" class="col-sm-3 col-md-2 visible-lg">Column 4</div> <!-- visible-lg = isoilla näytöllä näkyvä 18.1.2016 -->
+    </div>
+    <p class="error"></p>
+    <form class="loginForm">
+        <h3>Login or Register to Frinds App!</h3>
+        <input type="text" placeholder="username" class="form-control" ng-model="user"><br/>
+        <input type="password" placeholder="password" class="form-control" ng-model='pass'><br/>
+        <input type="button" value="Login" class="btn btn-default" ng-click='loginClicked()'>
+        <input type="button" value="Register" class="btn btn-default" ng-click='registerClicked()'>
+        <!-- bind the data from username testfield (use variable 'user') -->
+        <p>{{user}}</p> <!-- {{}} = interpolate direktiivi  -->
+    </form>
+
+</div>
 
