@@ -1,5 +1,6 @@
 main_module.controller('addController',function($scope,Flash,friendDataFactory){
     
+    // lisätty 19.1.2016. Navbar toteutettu direktiivillä
     $scope.navbarData = {
 		
 		urls:['/logout','#/delete','#/insert','http://www.kaleva.fi'],
@@ -20,6 +21,12 @@ main_module.controller('addController',function($scope,Flash,friendDataFactory){
             address:$scope.address,
             age:$scope.age
         };
+        
+        if(temp.name.length === 0 || temp.address.length === 0 || temp.age.length === 0){
+            
+            alert('Need more data!');
+            return;
+        }
         
         var waitPromise = friendDataFactory.insertData(temp);
 

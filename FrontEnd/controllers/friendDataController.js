@@ -7,8 +7,8 @@ main_module.controller('friendDataController',function($scope,friendDataFactory,
     // lisätty 19.1.2016. Navbar toteutettu direktiivillä
     $scope.navbarData = {
         
-        urls:['/logout','#/delete','#/insert'],
-		texts:['Logout','Delete','Insert']
+        urls:['/logout','#/delete','#/insert','#/location','http://www.kaleva.fi'],
+		texts:['Logout','Delete','Insert','Your Location','News']
     }
     
     console.log('friedDataController loaded');

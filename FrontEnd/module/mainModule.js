@@ -78,6 +78,11 @@ main_module.config(function($routeProvider){
         templateUrl:'partial_editView.html',
         controller:'editController',
         resolve:{loginReguired:loginRequired}
+    
+    }).when('/location',{ // lisätty 19.1.2016
+		
+		templateUrl:'here_you_are.html',
+		resolve:{loginRequired:loginRequired}
         
     });
 });

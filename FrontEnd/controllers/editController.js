@@ -3,6 +3,14 @@ main_module.controller('editController',function($scope,Flash,friendDataFactory,
     
     var selectedFriend = friendDataFactory.getSelectedFriend();
 
+    // lisätty 19.1.2016. Navbar toteutettu direktiivillä
+    $scope.navbarData = {
+		
+		urls:['/logout','#/delete','#/insert','#/location','http://www.kaleva.fi'],
+		texts:['Logout','Delete','Insert','Your Location','News']
+	}
+    
+    
     $scope.id = selectedFriend._id;
     // vie näytön (partial_editView.html) name/address/age-kenttiin tietokannassa olevan nimen
     $scope.name = selectedFriend.name;

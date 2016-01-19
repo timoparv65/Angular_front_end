@@ -1,6 +1,8 @@
-<ng-include src="'navbar.html'"></ng-include> <!-- lisätty 18.1.2016 -->
+<!-- <ng-include src="'navbar.html'"></ng-include> --> <!-- lisätty 18.1.2016 -->
+<nav-bar navbar-data='navbarData'></nav-bar> <!-- lisätty 19.1.2016. Navbar toteutettu direktiivilä -->
 <form class="loginForm">
     <h3>Add new friend info</h3>
+    <!--ng-model directive is the way to transfer data to controller -->
     <input class="form-control" type="text" placeholder="name" ng-model="name">
     <input class="form-control" type="text" placeholder="address" ng-model="address">
     <input class="form-control" type="text" placeholder="age" ng-model="age">
