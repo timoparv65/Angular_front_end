@@ -1,6 +1,8 @@
 main_module.controller('friendDataController',function($scope,friendDataFactory,$location){
     
     $scope.name = "by Timo Parviainen"; // liittyy direktiivin. Lisätty 18.1.2016
+    // lisätty 19.1.2016. Liittyy direktiiviin
+    $scope.temp = ['Heikki Hela','Risto Mattila','Juha Sipilä','Teuvo Hakkarainen'];
     
     console.log('friedDataController loaded');
     

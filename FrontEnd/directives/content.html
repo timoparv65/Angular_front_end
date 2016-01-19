@@ -1,1 +1,8 @@
-<h1>This is my directive{{name}}</h1>
+<h1>This is my directive {{userName}}</h1>
+
+<ul ng-repeat="user in users">
+    <li>{{user}}</li>
+    <!-- tai jos taulukko sisältää objekteja niin user.name, user.age jne -->
+</ul>
+
+<p>Temperature: {{temp}}</p> <!-- renderöidään läpötila $scope.temp:istä -->
