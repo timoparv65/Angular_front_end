@@ -1,4 +1,11 @@
-﻿main_module.controller('addController',function($scope,Flash,friendDataFactory){
+main_module.controller('addController',function($scope,Flash,friendDataFactory){
+    
+    $scope.navbarData = {
+		
+		urls:['/logout','#/delete','#/insert','http://www.kaleva.fi'],
+		texts:['Logout','Delete','Insert','News']
+	}
+    
     console.log('addController loaded');
     
     //Funktiototeutus Save-nappulan painallukselle partial_addView.html ikkunassa
