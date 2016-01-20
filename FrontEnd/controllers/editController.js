@@ -7,7 +7,8 @@ main_module.controller('editController',function($scope,Flash,friendDataFactory,
     $scope.navbarData = {
 		
 		urls:['/logout','#/delete','#/insert','#/location','http://www.kaleva.fi'],
-		texts:['Logout','Delete','Insert','Your Location','News']
+		texts:['Logout','Delete','Insert','Your Location','News'],
+        classes:['','','','','']
 	}
     
     

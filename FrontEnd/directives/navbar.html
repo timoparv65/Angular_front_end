@@ -12,7 +12,9 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav" ng-repeat="data in navbarData.urls"> <!-- 19.1.2016: lisätty ng-repeat osuus -->
-              <li><a href="{{navbarData.urls[$index]}}">{{navbarData.texts[$index]}}</a></li>
+              <!--<li><a href="{{navbarData.urls[$index]}}">{{navbarData.texts[$index]}}</a></li>-->
+            <!-- 20.1.2016 alla testiversio: asettaa linkin aktiiviseksi kun valittu -->
+                <li class="{{navbarData.classes[$index]}}"><a href="{{navbarData.urls[$index]}}">{{navbarData.texts[$index]}}</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

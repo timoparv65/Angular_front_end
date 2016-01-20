@@ -8,7 +8,8 @@ main_module.controller('friendDataController',function($scope,friendDataFactory,
     $scope.navbarData = {
         
         urls:['/logout','#/delete','#/insert','#/location','http://www.kaleva.fi'],
-		texts:['Logout','Delete','Insert','Your Location','News']
+		texts:['Logout','Delete','Insert','Your Location','News'],
+        classes:['','','','','']
     }
     
     console.log('friedDataController loaded');

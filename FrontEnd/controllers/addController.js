@@ -4,7 +4,8 @@ main_module.controller('addController',function($scope,Flash,friendDataFactory){
     $scope.navbarData = {
 		
 		urls:['/logout','#/delete','#/insert','http://www.kaleva.fi'],
-		texts:['Logout','Delete','Insert','News']
+		texts:['Logout','Delete','Insert','News'],
+        classes:['','','active','','']
 	}
     
     console.log('addController loaded');
